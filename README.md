@@ -1,6 +1,6 @@
 # Dark Pattern Detector — Android App
 
-**An on-device AI app that detects manipulative design patterns (dark patterns) in screenshots.**
+A privacy-first Android app that detects manipulative design patterns in screenshots using on-device AI (Gemini Nano), with zero data leaving your device.
 
 Built for Samsung S24 with Gemini Nano. 100% privacy-preserving — no data ever leaves the device.
 
