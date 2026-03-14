@@ -121,6 +121,14 @@ class GeminiNanoDetector(private val context: Context) {
             PatternType.TRICK_WORDING to listOf(
                 "uncheck to", "opt out of not", "double negative",
                 "confusing", "misleading language"
+            ),
+            PatternType.FORCED_ACTION to listOf(
+                "create account", "sign up to view", "download app",
+                "share to", "invite friends", "mandatory account"
+            ),
+            PatternType.SNEAKING to listOf(
+                "added to cart", "insurance", "warranty", "donation",
+                "extra item", "sneaked", "basket"
             )
         )
 

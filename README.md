@@ -49,6 +49,8 @@ Built for Samsung S24 with Gemini Nano. 100% privacy-preserving — no data ever
 | Hard to Cancel | "Call to cancel your subscription" |
 | Preselection | "☑ Sign me up for emails" |
 | Trick Wording | "Uncheck to not receive emails" |
+| Forced Action | "Sign up to continue reading" |
+| Sneaking | "Insurance added to cart" |
 
 ## License
 

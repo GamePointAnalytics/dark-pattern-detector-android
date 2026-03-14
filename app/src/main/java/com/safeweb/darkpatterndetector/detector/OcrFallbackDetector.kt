@@ -62,6 +62,9 @@ class OcrFallbackDetector(private val context: Context) {
         ),
         PatternType.FORCED_ACTION to listOf(
             Regex("\\b(create an account to|sign up to (view|access|continue)|download (our|the) app to|share with \\d+ friends)\\b", RegexOption.IGNORE_CASE)
+        ),
+        PatternType.SNEAKING to listOf(
+            Regex("\\b(added (extra|insurance|warranty)|donation|automatically added|item(s)? (you might like|suggested))\\b", RegexOption.IGNORE_CASE)
         )
     )
 
