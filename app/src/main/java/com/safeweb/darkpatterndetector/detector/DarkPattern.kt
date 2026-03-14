@@ -51,7 +51,8 @@ enum class PatternType(val displayName: String, val emoji: String) {
 data class AnalysisResult(
     val patterns: List<DarkPattern>,
     val modelUsed: String,
-    val analysisTimeMs: Long
+    val analysisTimeMs: Long,
+    val extractedText: String = ""  // Raw text extracted by OCR (empty if Gemini Nano was used)
 ) {
     val patternCount: Int get() = patterns.size
     val isClean: Boolean get() = patterns.isEmpty()

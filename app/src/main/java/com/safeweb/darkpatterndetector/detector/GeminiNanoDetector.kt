@@ -162,7 +162,7 @@ class GeminiNanoDetector(private val context: Context) {
                 val client = ImageDescriber.getClient(options)
 
                 val statusInt = client.checkFeatureStatus().await()
-                return statusInt == FeatureStatus.DOWNLOADABLE || statusInt == FeatureStatus.DOWNLOADED
+                return statusInt == FeatureStatus.DOWNLOADED
             } catch (e: Exception) {
                 false
             }

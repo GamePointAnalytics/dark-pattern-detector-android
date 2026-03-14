@@ -85,7 +85,8 @@ class OcrFallbackDetector(private val context: Context) {
         return AnalysisResult(
             patterns = patterns,
             modelUsed = "OCR + Regex (fallback)",
-            analysisTimeMs = elapsed
+            analysisTimeMs = elapsed,
+            extractedText = extractedText
         )
     }
 

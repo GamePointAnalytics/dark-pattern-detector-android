@@ -21,16 +21,13 @@ class DarkPatternAnalyzer(private val context: Context) {
         // Try Gemini Nano first (best accuracy, multimodal)
         return if (GeminiNanoDetector.isAvailable(context)) {
             val result = GeminiNanoDetector(context).analyze(bitmap)
-            // If Gemini Nano found patterns, return them
-            // If it ran successfully but found nothing, we trust it (better than OCR fallback)
             if (result.patterns.isNotEmpty()) {
+                // Gemini Nano found patterns — trust it
                 result
-            } else if (result.modelUsed.contains("error")) {
-                // Gemini Nano errored, fall back entirely
-                OcrFallbackDetector(context).analyze(bitmap)
             } else {
-                // Gemini Nano ran but found nothing — trust it
-                result
+                // Gemini Nano found nothing (or errored) — always run OCR as a safety net
+                val ocrResult = OcrFallbackDetector(context).analyze(bitmap)
+                if (ocrResult.patterns.isNotEmpty()) ocrResult else result
             }
         } else {
             // Gemini Nano not available, use OCR fallback

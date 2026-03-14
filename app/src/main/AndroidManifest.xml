@@ -15,6 +15,11 @@
         android:theme="@style/Theme.DarkPatternDetector"
         tools:targetApi="35">
 
+        <!-- ML Kit OCR model: pre-download at install time -->
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ocr" />
+
         <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
