@@ -26,12 +26,12 @@ class DarkPatternAnalyzer(private val context: Context) {
                 result
             } else {
                 // Gemini Nano found nothing — fallback to OCR safety net
-                val ocrResult = OcrFallbackDetector(context).analyze(bitmap)
+                val ocrResult = OcrFallbackDetector().analyze(bitmap)
                 if (ocrResult.patterns.isNotEmpty()) ocrResult else result
             }
         } else {
             // AI not available for this session, immediate OCR fallback
-            OcrFallbackDetector(context).analyze(bitmap)
+            OcrFallbackDetector().analyze(bitmap)
         }
     }
 }
