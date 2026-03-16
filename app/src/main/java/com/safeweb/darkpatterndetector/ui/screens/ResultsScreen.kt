@@ -21,11 +21,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.safeweb.darkpatterndetector.R
 import com.safeweb.darkpatterndetector.detector.AnalysisResult
 import com.safeweb.darkpatterndetector.detector.DarkPattern
-import com.safeweb.darkpatterndetector.ui.theme.*
+import com.safeweb.darkpatterndetector.ui.theme.DangerRed
+import com.safeweb.darkpatterndetector.ui.theme.SafeGreen
+import com.safeweb.darkpatterndetector.ui.theme.WarningAmber
 
 @Composable
 fun ResultsScreen(
@@ -53,7 +57,7 @@ fun ResultsScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Analysis Results",
+                    text = stringResource(R.string.analysis_results),
                     style = MaterialTheme.typography.titleLarge.copy(
                         fontWeight = FontWeight.Bold
                     ),
@@ -66,7 +70,7 @@ fun ResultsScreen(
                     color = SafeGreen.copy(alpha = 0.15f)
                 ) {
                     Text(
-                        text = "\uD83D\uDD12 On-Device",
+                        text = stringResource(R.string.on_device_lock),
                         style = MaterialTheme.typography.labelSmall,
                         color = SafeGreen,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -94,7 +98,7 @@ fun ResultsScreen(
                     ) {
                         Image(
                             bitmap = screenshotBitmap.asImageBitmap(),
-                            contentDescription = "Analyzed screenshot",
+                            contentDescription = stringResource(R.string.screenshot_desc),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .heightIn(max = 300.dp)
@@ -114,7 +118,7 @@ fun ResultsScreen(
             if (result.patterns.isNotEmpty()) {
                 item {
                     Text(
-                        text = "Detected Patterns",
+                        text = stringResource(R.string.detected_patterns),
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.SemiBold
                         ),
@@ -131,7 +135,7 @@ fun ResultsScreen(
             // Analysis info
             item {
                 Text(
-                    text = "Analyzed in ${result.analysisTimeMs}ms \u00B7 ${result.modelUsed}",
+                    text = stringResource(R.string.analysis_info, result.analysisTimeMs, result.modelUsed),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 4.dp)
@@ -164,7 +168,7 @@ fun ResultsScreen(
                 )
             ) {
                 Text(
-                    text = "Done",
+                    text = stringResource(R.string.done_button),
                     style = MaterialTheme.typography.bodyLarge.copy(
                         fontWeight = FontWeight.SemiBold
                     )
@@ -202,7 +206,7 @@ private fun SummaryCard(result: AnalysisResult) {
             Column {
                 val patternCount = result.patterns.size
                 Text(
-                    text = if (isClean) "No dark patterns found \u2713" else "$patternCount dark pattern(s) detected",
+                    text = if (isClean) stringResource(R.string.no_patterns_found) else stringResource(R.string.patterns_detected, patternCount),
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold
                     ),
@@ -210,7 +214,7 @@ private fun SummaryCard(result: AnalysisResult) {
                 )
                 if (!isClean) {
                     Text(
-                        text = "Be cautious with this content",
+                        text = stringResource(R.string.caution_message),
                         style = MaterialTheme.typography.bodySmall,
                         color = iconColor.copy(alpha = 0.8f)
                     )
@@ -301,14 +305,14 @@ private fun ExtractedTextCard(text: String) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "\uD83D\uDCDD Extracted Text (OCR)",
+                    text = stringResource(R.string.extracted_text_title),
                     style = MaterialTheme.typography.titleSmall.copy(
                         fontWeight = FontWeight.SemiBold
                     ),
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
-                    text = if (expanded) "hide ▲" else "show ▼",
+                    text = if (expanded) stringResource(R.string.hide_label) else stringResource(R.string.show_label),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

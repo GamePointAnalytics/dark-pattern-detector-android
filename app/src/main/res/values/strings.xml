@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Dark Pattern Detector</string>
-    <string name="home_title">Dark Pattern Detector</string>
-    <string name="home_subtitle">Detect manipulative design patterns in screenshots</string>
-    <string name="home_instruction_1">1. Take a screenshot of a suspicious app or website</string>
-    <string name="home_instruction_2">2. Tap Share \u2192 choose Dark Pattern Detector</string>
-    <string name="home_instruction_3">3. View the analysis results</string>
-    <string name="import_gallery">Import from Gallery</string>
-    <string name="analyzing">Analyzing screenshot\u2026</string>
+    <string name="home_title">Dark Pattern\nDetector</string>
+    <string name="home_subtitle">Detect manipulative design patterns\nin screenshots</string>
+    <string name="how_to_use">How to use</string>
+    <string name="instruction_1">Take a screenshot of a suspicious app or website</string>
+    <string name="instruction_2">Tap Share \u2192 choose Dark Pattern Detector</string>
+    <string name="instruction_3">View the analysis results instantly</string>
+    <string name="import_from_gallery">Import from Gallery</string>
+    <string name="url_placeholder">https://example.com</string>
+    <string name="analyze_website">Analyze Website</string>
+    <string name="on_device_badge">100% On-Device \u00B7 No data leaves your phone</string>
+
+    <string name="analyzing_screenshot">Analyzing Screenshot</string>
+    <string name="scanning_patterns">Gemini Nano is scanning for deceptive patterns&#8230;</string>
+    <string name="step_loading_model">Loading on-device model</string>
+    <string name="step_scanning_elements">Scanning visual elements</string>
+    <string name="step_identifying_patterns">Identifying dark patterns</string>
+
+    <string name="analysis_results">Analysis Results</string>
+    <string name="on_device_lock">\uD83D\uDD12 On-Device</string>
+    <string name="screenshot_desc">Analyzed screenshot</string>
+    <string name="detected_patterns">Detected Patterns</string>
+    <string name="analysis_info">Analyzed in %1$dms \u00B7 %2$s</string>
+    <string name="done_button">Done</string>
     <string name="no_patterns_found">No dark patterns found \u2713</string>
-    <string name="patterns_found">%d dark pattern(s) detected</string>
-    <string name="done">Done</string>
-    <string name="confidence">Confidence</string>
-    <string name="ai_powered">AI-Powered · 100%% On-Device</string>
-    <string name="privacy_badge">\uD83D\uDD12 No data leaves your device</string>
-    <string name="model_loading">Loading AI model…</string>
-    <string name="model_unavailable">AI model unavailable — using text fallback</string>
-    <string name="share_error">Could not load shared image</string>
+    <string name="patterns_detected">%d dark pattern(s) detected</string>
+    <string name="caution_message">Be cautious with this content</string>
+    <string name="extracted_text_title">\uD83D\uDCDD Extracted Text (OCR)</string>
+    <string name="show_label">show ▼</string>
+    <string name="hide_label">hide ▲</string>
+
+    <string name="back_button">Back</string>
+    <string name="analyzing_website">Analyzing Website Context&#8230;</string>
+    <string name="no_url_waiting">No URL provided or waiting to start.</string>
+    <string name="clear_url_desc">Clear URL</string>
 </resources>

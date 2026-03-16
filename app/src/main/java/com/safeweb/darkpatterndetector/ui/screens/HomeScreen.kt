@@ -19,10 +19,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.safeweb.darkpatterndetector.R
 
 @Composable
 fun HomeScreen(
@@ -61,7 +63,7 @@ fun HomeScreen(
 
         // Title
         Text(
-            text = "Dark Pattern\nDetector",
+            text = stringResource(R.string.home_title),
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.Bold,
                 lineHeight = 40.sp
@@ -74,7 +76,7 @@ fun HomeScreen(
 
         // Subtitle
         Text(
-            text = "Detect manipulative design patterns\nin screenshots",
+            text = stringResource(R.string.home_subtitle),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center
@@ -92,7 +94,7 @@ fun HomeScreen(
         ) {
             Column(modifier = Modifier.padding(20.dp)) {
                 Text(
-                    text = "How to use",
+                    text = stringResource(R.string.how_to_use),
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.SemiBold
                     ),
@@ -101,11 +103,11 @@ fun HomeScreen(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                InstructionStep(number = "1", text = "Take a screenshot of a suspicious app or website")
+                InstructionStep(number = "1", text = stringResource(R.string.instruction_1))
                 Spacer(modifier = Modifier.height(8.dp))
-                InstructionStep(number = "2", text = "Tap Share \u2192 choose Dark Pattern Detector")
+                InstructionStep(number = "2", text = stringResource(R.string.instruction_2))
                 Spacer(modifier = Modifier.height(8.dp))
-                InstructionStep(number = "3", text = "View the analysis results instantly")
+                InstructionStep(number = "3", text = stringResource(R.string.instruction_3))
             }
         }
 
@@ -129,7 +131,7 @@ fun HomeScreen(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "Import from Gallery",
+                text = stringResource(R.string.import_from_gallery),
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.Medium
                 )
@@ -143,7 +145,7 @@ fun HomeScreen(
         OutlinedTextField(
             value = urlInput,
             onValueChange = { urlInput = it },
-            placeholder = { Text("https://example.com") },
+            placeholder = { Text(stringResource(R.string.url_placeholder)) },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
             singleLine = true,
@@ -157,7 +159,7 @@ fun HomeScreen(
                     IconButton(onClick = { urlInput = "" }) {
                         Icon(
                             imageVector = Icons.Filled.Clear,
-                            contentDescription = "Clear URL"
+                            contentDescription = stringResource(R.string.clear_url_desc)
                         )
                     }
                 }
@@ -194,7 +196,7 @@ fun HomeScreen(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "Analyze Website",
+                text = stringResource(R.string.analyze_website),
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.Medium
                 )
@@ -220,7 +222,7 @@ fun HomeScreen(
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
-                    text = "100% On-Device \u00B7 No data leaves your phone",
+                    text = stringResource(R.string.on_device_badge),
                     style = MaterialTheme.typography.labelMedium,
                     color = electricBlue
                 )

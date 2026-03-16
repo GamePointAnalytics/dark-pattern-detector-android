@@ -8,8 +8,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.safeweb.darkpatterndetector.R
 import com.safeweb.darkpatterndetector.ui.theme.SafeGreen
 
 @Composable
@@ -33,7 +35,7 @@ fun AnalyzingScreen(
         Spacer(modifier = Modifier.height(32.dp))
         
         Text(
-            text = "Analyzing Screenshot",
+            text = stringResource(R.string.analyzing_screenshot),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground
@@ -42,7 +44,7 @@ fun AnalyzingScreen(
         Spacer(modifier = Modifier.height(12.dp))
         
         Text(
-            text = "Gemini Nano is scanning for deceptive patterns...",
+            text = stringResource(R.string.scanning_patterns),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = androidx.compose.ui.text.style.TextAlign.Center
@@ -51,9 +53,9 @@ fun AnalyzingScreen(
         Spacer(modifier = Modifier.height(48.dp))
         
         // Progress indicators
-        AnalysisStep(text = "Loading on-device model", isCompleted = true)
-        AnalysisStep(text = "Scanning visual elements", isCompleted = true)
-        AnalysisStep(text = "Identifying dark patterns", isCompleted = false)
+        AnalysisStep(text = stringResource(R.string.step_loading_model), isCompleted = true)
+        AnalysisStep(text = stringResource(R.string.step_scanning_elements), isCompleted = true)
+        AnalysisStep(text = stringResource(R.string.step_identifying_patterns), isCompleted = false)
     }
 }
 
