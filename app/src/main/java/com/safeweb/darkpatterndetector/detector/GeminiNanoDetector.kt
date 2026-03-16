@@ -4,11 +4,11 @@ import android.content.Context
 import android.graphics.Bitmap
 import com.google.mlkit.genai.imagedescription.ImageDescriber
 import com.google.mlkit.genai.imagedescription.ImageDescriberOptions
+import com.google.mlkit.genai.imagedescription.ImageDescription
 import com.google.mlkit.genai.common.FeatureStatus
 
 import com.google.mlkit.genai.imagedescription.ImageDescriptionRequest
 import androidx.concurrent.futures.await
-import com.google.mlkit.vision.common.InputImage
 
 
 /**
@@ -22,13 +22,13 @@ class GeminiNanoDetector(private val context: Context) {
     /**
      * Initialize the ML Kit GenAI image describer.
      */
-    private suspend fun getDescriber(): ImageDescriber {
+    private fun getDescriber(): ImageDescriber {
         if (describer != null) return describer!!
 
-        val options = ImageDescriberOptions.Builder(context)
+        val options = ImageDescriberOptions.builder(context)
             .build()
 
-        val client = ImageDescriber.getClient(options)
+        val client = ImageDescription.getClient(options)
         describer = client
         return client
     }
@@ -42,16 +42,14 @@ class GeminiNanoDetector(private val context: Context) {
 
         return try {
             val client = getDescriber()
-            val inputImage = InputImage.fromBitmap(bitmap, 0)
 
             // Get image description from Gemini Nano
             // Note: ImageDescriber uses ListenableFuture, not Task
-            val request = ImageDescriptionRequest.builder()
-                .setInputImage(inputImage)
+            val request = ImageDescriptionRequest.builder(bitmap)
                 .build()
             
             val result = client.runInference(request).await()
-            val description = result.description ?: ""
+            val description = result.description
 
             // Parse the description for dark pattern indicators
             val patterns = parseDescription(description)
@@ -158,12 +156,12 @@ class GeminiNanoDetector(private val context: Context) {
          */
         suspend fun isAvailable(context: Context): Boolean {
             return try {
-                val options = ImageDescriberOptions.Builder(context).build()
-                val client = ImageDescriber.getClient(options)
+                val options = ImageDescriberOptions.builder(context).build()
+                val client = ImageDescription.getClient(options)
 
                 val statusInt = client.checkFeatureStatus().await()
-                return statusInt == FeatureStatus.DOWNLOADED
-            } catch (e: Exception) {
+                statusInt == FeatureStatus.AVAILABLE
+            } catch (_: Exception) {
                 false
             }
         }

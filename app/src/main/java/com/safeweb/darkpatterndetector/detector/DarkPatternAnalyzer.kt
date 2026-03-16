@@ -12,25 +12,25 @@ class DarkPatternAnalyzer(private val context: Context) {
 
     /**
      * Analyze a screenshot for dark patterns.
-     * The bitmap is never persisted — held in memory only.
      *
      * @param bitmap The screenshot to analyze (in-memory only)
-     * @return Analysis results (ephemeral, discarded when user navigates away)
+     * @param isAiAvailable Whether Gemini Nano is available for this session
+     * @return Analysis results
      */
-    suspend fun analyze(bitmap: Bitmap): AnalysisResult {
-        // Try Gemini Nano first (best accuracy, multimodal)
-        return if (GeminiNanoDetector.isAvailable(context)) {
+    suspend fun analyze(bitmap: Bitmap, isAiAvailable: Boolean): AnalysisResult {
+        // Use pre-determined availability to avoid slow system checks
+        return if (isAiAvailable) {
             val result = GeminiNanoDetector(context).analyze(bitmap)
             if (result.patterns.isNotEmpty()) {
                 // Gemini Nano found patterns — trust it
                 result
             } else {
-                // Gemini Nano found nothing (or errored) — always run OCR as a safety net
+                // Gemini Nano found nothing — fallback to OCR safety net
                 val ocrResult = OcrFallbackDetector(context).analyze(bitmap)
                 if (ocrResult.patterns.isNotEmpty()) ocrResult else result
             }
         } else {
-            // Gemini Nano not available, use OCR fallback
+            // AI not available for this session, immediate OCR fallback
             OcrFallbackDetector(context).analyze(bitmap)
         }
     }

@@ -4,27 +4,34 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.PhotoLibrary
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.safeweb.darkpatterndetector.ui.theme.SafeGreen
 
 @Composable
 fun HomeScreen(
     onImportFromGallery: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val electricBlue = MaterialTheme.colorScheme.primary
+    val neutralGrey = Color(0xFFCFD8DC)
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -34,18 +41,18 @@ fun HomeScreen(
     ) {
         Spacer(modifier = Modifier.height(48.dp))
 
-        // App icon
+        // App icon (Shield now Electric Blue)
         Surface(
             modifier = Modifier.size(80.dp),
             shape = RoundedCornerShape(20.dp),
-            color = SafeGreen.copy(alpha = 0.15f)
+            color = electricBlue.copy(alpha = 0.15f)
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Icon(
                     imageVector = Icons.Filled.Shield,
                     contentDescription = "Shield",
                     modifier = Modifier.size(48.dp),
-                    tint = SafeGreen
+                    tint = electricBlue
                 )
             }
         }
@@ -112,7 +119,7 @@ fun HomeScreen(
                 .height(56.dp),
             shape = RoundedCornerShape(16.dp),
             colors = ButtonDefaults.outlinedButtonColors(
-                contentColor = MaterialTheme.colorScheme.primary
+                contentColor = electricBlue
             )
         ) {
             Icon(
@@ -128,13 +135,78 @@ fun HomeScreen(
                 )
             )
         }
+        
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // URL Input with neutral grey border
+        var urlInput by remember { mutableStateOf("") }
+        OutlinedTextField(
+            value = urlInput,
+            onValueChange = { urlInput = it },
+            placeholder = { Text("https://example.com") },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp),
+            singleLine = true,
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedBorderColor = neutralGrey,
+                focusedBorderColor = electricBlue,
+                cursorColor = electricBlue
+            ),
+            trailingIcon = {
+                if (urlInput.isNotEmpty()) {
+                    IconButton(onClick = { urlInput = "" }) {
+                        Icon(
+                            imageVector = Icons.Filled.Clear,
+                            contentDescription = "Clear URL"
+                        )
+                    }
+                }
+            }
+        )
+        
+        Spacer(modifier = Modifier.height(8.dp))
+        
+        val context = LocalContext.current
+        Button(
+            onClick = {
+                if (urlInput.isNotBlank()) {
+                    val intent = android.content.Intent(context, com.safeweb.darkpatterndetector.ui.activities.WebsiteAnalyzerActivity::class.java).apply {
+                        action = android.content.Intent.ACTION_SEND
+                        type = "text/plain"
+                        putExtra(android.content.Intent.EXTRA_TEXT, urlInput)
+                    }
+                    context.startActivity(intent)
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = electricBlue,
+                contentColor = Color.White
+            )
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Search,
+                contentDescription = null,
+                modifier = Modifier.size(20.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = "Analyze Website",
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontWeight = FontWeight.Medium
+                )
+            )
+        }
 
         Spacer(modifier = Modifier.weight(1f))
 
         // Privacy badge
         Surface(
             shape = RoundedCornerShape(24.dp),
-            color = SafeGreen.copy(alpha = 0.1f)
+            color = electricBlue.copy(alpha = 0.1f)
         ) {
             Row(
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -144,13 +216,13 @@ fun HomeScreen(
                     imageVector = Icons.Filled.Security,
                     contentDescription = null,
                     modifier = Modifier.size(16.dp),
-                    tint = SafeGreen
+                    tint = electricBlue
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
                     text = "100% On-Device \u00B7 No data leaves your phone",
                     style = MaterialTheme.typography.labelMedium,
-                    color = SafeGreen
+                    color = electricBlue
                 )
             }
         }

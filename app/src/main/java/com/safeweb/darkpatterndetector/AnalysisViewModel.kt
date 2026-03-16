@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.safeweb.darkpatterndetector.detector.AnalysisResult
 import com.safeweb.darkpatterndetector.detector.DarkPatternAnalyzer
+import com.safeweb.darkpatterndetector.detector.GeminiNanoDetector
+import com.safeweb.darkpatterndetector.detector.WebsiteTextAnalyzer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,7 +27,7 @@ class AnalysisViewModel : ViewModel() {
         data object Analyzing : UiState()
         data class Results(
             val result: AnalysisResult,
-            val screenshotBitmap: Bitmap
+            val screenshotBitmap: Bitmap? = null
         ) : UiState()
         data class Error(val message: String) : UiState()
     }
@@ -33,19 +35,30 @@ class AnalysisViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
+    // Session-level check for AI availability
+    private var isAiAvailable: Boolean? = null
+
     // Hold the bitmap in memory only — never persisted
     private var currentBitmap: Bitmap? = null
 
     /**
+     * Check if Gemini Nano is available on this device once per session.
+     */
+    private suspend fun checkAiAvailability(context: Context): Boolean {
+        if (isAiAvailable != null) return isAiAvailable!!
+        val available = GeminiNanoDetector.isAvailable(context)
+        isAiAvailable = available
+        return available
+    }
+
+    /**
      * Load a bitmap from a content URI and start analysis.
-     * The bitmap is held in memory only — never written to disk.
      */
     fun analyzeFromUri(context: Context, uri: Uri) {
         viewModelScope.launch {
             _uiState.value = UiState.Analyzing
 
             try {
-                // Load bitmap from URI into memory
                 val bitmap = loadBitmap(context, uri)
                 if (bitmap == null) {
                     _uiState.value = UiState.Error("Could not load image")
@@ -53,7 +66,14 @@ class AnalysisViewModel : ViewModel() {
                 }
 
                 currentBitmap = bitmap
-                analyzeInternal(context, bitmap)
+                val aiReady = checkAiAvailability(context)
+                val analyzer = DarkPatternAnalyzer(context)
+                val result = analyzer.analyze(bitmap, aiReady)
+
+                _uiState.value = UiState.Results(
+                    result = result,
+                    screenshotBitmap = bitmap
+                )
             } catch (e: Exception) {
                 _uiState.value = UiState.Error("Error: ${e.message}")
             }
@@ -61,27 +81,22 @@ class AnalysisViewModel : ViewModel() {
     }
 
     /**
-     * Analyze an already-loaded bitmap.
+     * Analyze website text.
      */
-    fun analyzeBitmap(context: Context, bitmap: Bitmap) {
+    fun analyzeWebsite(context: Context, text: String) {
         viewModelScope.launch {
             _uiState.value = UiState.Analyzing
-            currentBitmap = bitmap
-            analyzeInternal(context, bitmap)
-        }
-    }
+            try {
+                val aiReady = checkAiAvailability(context)
+                val analyzer = WebsiteTextAnalyzer()
+                val result = analyzer.analyze(text, aiReady)
 
-    private suspend fun analyzeInternal(context: Context, bitmap: Bitmap) {
-        try {
-            val analyzer = DarkPatternAnalyzer(context)
-            val result = analyzer.analyze(bitmap)
-
-            _uiState.value = UiState.Results(
-                result = result,
-                screenshotBitmap = bitmap
-            )
-        } catch (e: Exception) {
-            _uiState.value = UiState.Error("Analysis failed: ${e.message}")
+                _uiState.value = UiState.Results(
+                    result = result
+                )
+            } catch (e: Exception) {
+                _uiState.value = UiState.Error("Website analysis failed: ${e.message}")
+            }
         }
     }
 
@@ -96,7 +111,6 @@ class AnalysisViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        // Ensure bitmap is cleaned up when ViewModel is destroyed
         currentBitmap?.recycle()
         currentBitmap = null
     }

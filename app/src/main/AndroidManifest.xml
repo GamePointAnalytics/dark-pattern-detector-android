@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- NO INTERNET PERMISSION - data never leaves the device -->
+    <!-- INTERNET PERMISSION - needed to load URLs in WebView for text extraction -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="false"
@@ -15,35 +16,48 @@
         android:theme="@style/Theme.DarkPatternDetector"
         tools:targetApi="35">
 
-        <!-- ML Kit OCR model: pre-download at install time -->
-        <meta-data
-            android:name="com.google.mlkit.vision.DEPENDENCIES"
-            android:value="ocr" />
+    <!-- ML Kit OCR model: pre-download at install time -->
+    <meta-data
+        android:name="com.google.mlkit.vision.DEPENDENCIES"
+        android:value="ocr" />
 
-        <!-- Main Activity -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.DarkPatternDetector">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+    <!-- Main Activity -->
+    <activity
+        android:name=".MainActivity"
+        android:exported="true"
+        android:theme="@style/Theme.DarkPatternDetector">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
 
-        <!-- Share Intent Receiver -->
-        <activity
-            android:name=".ShareReceiverActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.DarkPatternDetector">
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="image/*" />
-            </intent-filter>
-        </activity>
+    <!-- Share Intent Receiver (Images) -->
+    <activity
+        android:name=".ShareReceiverActivity"
+        android:exported="true"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.DarkPatternDetector">
+        <intent-filter>
+            <action android:name="android.intent.action.SEND" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <data android:mimeType="image/*" />
+        </intent-filter>
+    </activity>
 
-    </application>
+    <!-- Website Analyzer Activity (URLs) -->
+    <activity
+        android:name=".ui.activities.WebsiteAnalyzerActivity"
+        android:exported="true"
+        android:label="Analyze Website"
+        android:theme="@style/Theme.DarkPatternDetector">
+        <intent-filter>
+            <action android:name="android.intent.action.SEND" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <data android:mimeType="text/plain" />
+        </intent-filter>
+    </activity>
+
+</application>
 
 </manifest>

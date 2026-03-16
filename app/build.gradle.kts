@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -37,10 +39,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
     buildFeatures {
         compose = true
     }
@@ -49,6 +47,13 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+}
+
+// Modern way to set JVM target for all Kotlin tasks in the module
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
@@ -75,6 +80,9 @@ dependencies {
 
     // ML Kit GenAI - Gemini Nano (on-device image description)
     implementation("com.google.mlkit:genai-image-description:1.0.0-beta1")
+    
+    // ML Kit GenAI - Gemini Nano (on-device text generation)
+    implementation("com.google.mlkit:genai-prompt:1.0.0-beta1")
 
     // ML Kit Text Recognition (OCR fallback)
     implementation("com.google.mlkit:text-recognition:16.0.1")
