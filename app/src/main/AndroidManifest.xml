@@ -36,7 +36,6 @@
     <activity
         android:name=".ShareReceiverActivity"
         android:exported="true"
-        android:label="@string/app_name"
         android:theme="@style/Theme.DarkPatternDetector">
         <intent-filter>
             <action android:name="android.intent.action.SEND" />

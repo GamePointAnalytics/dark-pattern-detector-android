@@ -77,7 +77,7 @@ class WebsiteTextAnalyzer {
             val responseText = response.candidates.firstOrNull()?.text
 
             parseNanoResponse(responseText)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }

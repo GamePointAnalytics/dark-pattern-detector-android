@@ -123,7 +123,7 @@ class AnalysisViewModel : ViewModel() {
                     BitmapFactory.decodeStream(stream)
                 }
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }

@@ -34,9 +34,9 @@ import com.safeweb.darkpatterndetector.ui.theme.WarningAmber
 @Composable
 fun ResultsScreen(
     result: AnalysisResult,
+    modifier: Modifier = Modifier,
     screenshotBitmap: Bitmap? = null,
-    onDismiss: () -> Unit,
-    modifier: Modifier = Modifier
+    onDismiss: () -> Unit
 ) {
     Column(
         modifier = modifier

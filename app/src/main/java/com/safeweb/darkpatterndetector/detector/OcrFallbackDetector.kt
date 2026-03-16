@@ -1,6 +1,5 @@
 package com.safeweb.darkpatterndetector.detector
 
-import android.content.Context
 import android.graphics.Bitmap
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
@@ -14,7 +13,7 @@ import kotlin.coroutines.resumeWithException
  * Used when Gemini Nano is unavailable on the device.
  * Still 100% on-device — no network required.
  */
-class OcrFallbackDetector(private val context: Context) {
+class OcrFallbackDetector {
 
     private val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
