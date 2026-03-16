@@ -6,7 +6,7 @@ A privacy-first Android app that detects manipulative design patterns in screens
 
 - **Screenshot Analysis**: Share a screenshot directly to the app for instant analysis.
 - **Website Analysis**: Enter a URL to analyze live website content without taking screenshots.
-- **Dual-Engine Detection**: Uses **Gemini Nano** for high-accuracy AI analysis, with a fast **Regex Fallback** for unsupported devices.
+- **Dual-Engine Detection**: Uses **Gemini Nano** for high-accuracy AI analysis on supported high-end devices (e.g., Pixel 8/9 series, Galaxy S24 series). For all other phones or emulators, it automatically and instantly uses a fast **Regex Fallback**.
 - **Privacy-First**: Analysis is performed 100% on-device. Screenshots are held in memory only and never saved to disk.
 
 ## How It Works
@@ -20,7 +20,7 @@ A privacy-first Android app that detects manipulative design patterns in screens
 ### Via URL
 1. 🔗 Paste a website URL into the app's home screen.
 2. 🌐 The app loads the site in a local WebView and extracts text context.
-3. 🧠 Gemini Nano processes the text to identify deceptive language.
+3. 🧠 Gemini Nano (or the Regex fallback) processes the text to identify deceptive language.
 
 ## Privacy
 
@@ -43,8 +43,8 @@ A privacy-first Android app that detects manipulative design patterns in screens
 
 1. Open the project in **Android Studio**.
 2. Ensure you have the **Android SDK 35** and **Kotlin 2.2.10** configured.
-3. Sync Gradle and run on a supported device (e.g., Pixel 8/9, Galaxy S24) or emulator.
-4. **Note**: On some devices, you may need to enable "AICore Settings" in Developer Options to trigger the Gemini Nano model download.
+3. Sync Gradle and run on your device or emulator.
+4. **Note on Gemini Nano**: To test the AI features, you must run the app on a physical, supported device (e.g., Pixel 8/9, Galaxy S24). On some devices, you may need to enable "AICore Settings" in Developer Options to trigger the model download. Emulators will automatically use the Regex fallback.
 
 ## Dark Patterns Detected
 
