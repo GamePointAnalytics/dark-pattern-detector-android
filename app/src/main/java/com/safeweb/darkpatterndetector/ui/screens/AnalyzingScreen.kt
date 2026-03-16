@@ -12,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.safeweb.darkpatterndetector.R
-import com.safeweb.darkpatterndetector.ui.theme.SafeGreen
+import com.safeweb.darkpatterndetector.ui.theme.SafeBlue
 
 @Composable
 fun AnalyzingScreen(
@@ -28,7 +28,7 @@ fun AnalyzingScreen(
     ) {
         CircularProgressIndicator(
             modifier = Modifier.size(64.dp),
-            color = SafeGreen,
+            color = SafeBlue,
             strokeWidth = 6.dp
         )
         
@@ -71,7 +71,7 @@ private fun AnalysisStep(text: String, isCompleted: Boolean) {
             modifier = Modifier
                 .size(10.dp)
                 .background(
-                    if (isCompleted) SafeGreen else MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
+                    if (isCompleted) SafeBlue else MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
                     shape = androidx.compose.foundation.shape.CircleShape
                 )
         )

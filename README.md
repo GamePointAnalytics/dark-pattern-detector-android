@@ -1,39 +1,50 @@
 # Dark Pattern Detector — Android App
 
-A privacy-first Android app that detects manipulative design patterns in screenshots using on-device AI (Gemini Nano), with zero data leaving your device.
+A privacy-first Android app that detects manipulative design patterns in screenshots and websites using on-device AI (Gemini Nano), with zero sensitive data leaving your device.
 
-Built for Samsung S24 with Gemini Nano. 100% privacy-preserving — no data ever leaves the device.
+## Key Features
+
+- **Screenshot Analysis**: Share a screenshot directly to the app for instant analysis.
+- **Website Analysis**: Enter a URL to analyze live website content without taking screenshots.
+- **Dual-Engine Detection**: Uses **Gemini Nano** for high-accuracy AI analysis, with a fast **Regex Fallback** for unsupported devices.
+- **Privacy-First**: Analysis is performed 100% on-device. Screenshots are held in memory only and never saved to disk.
 
 ## How It Works
 
-1. 📸 Take a screenshot of a suspicious app or website
-2. 📤 Tap **Share → Dark Pattern Detector**
-3. 🧠 Gemini Nano analyzes the screenshot **on-device**
-4. 📊 View detected dark patterns with confidence scores
-5. ✅ Tap **Done** — screenshot is discarded from memory
+### Via Screenshots
+1. 📸 Take a screenshot of a suspicious app or website.
+2. 📤 Tap **Share → Dark Pattern Detector**.
+3. 🧠 The app analyzes the visual elements **on-device**.
+4. 📊 View detected patterns with confidence scores.
+
+### Via URL
+1. 🔗 Paste a website URL into the app's home screen.
+2. 🌐 The app loads the site in a local WebView and extracts text context.
+3. 🧠 Gemini Nano processes the text to identify deceptive language.
 
 ## Privacy
 
-- ❌ **No `INTERNET` permission** — cannot make network calls
-- ❌ **No storage** — screenshots are never saved to disk
-- ❌ **No analytics** — zero tracking or telemetry
-- ✅ **100% on-device** — Gemini Nano runs locally via AICore
+- ✅ **100% On-Device**: AI models run locally via Android's AICore.
+- ✅ **Ephemeral Storage**: Screenshots are never written to disk or sent to a server.
+- ✅ **Secure Web Loading**: `INTERNET` permission is used strictly to load the requested URL in a local WebView for text extraction. No browsing data or history is collected.
 
 ## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
-| Language | Kotlin |
+| Language | Kotlin (2.2.10) |
 | UI | Jetpack Compose (Material 3) |
-| AI (Primary) | ML Kit GenAI + Gemini Nano |
-| AI (Fallback) | ML Kit OCR + Regex |
-| Architecture | MVVM + Coroutines |
+| AI (Multimodal) | ML Kit GenAI (Image Description) |
+| AI (Text) | ML Kit GenAI (Prompt API) |
+| Fallback | ML Kit OCR + Pattern Matching |
+| Build System | Gradle 8.7.3 + Compose Compiler |
 
 ## Building
 
-1. Open `dark-pattern-detector/` in **Android Studio**
-2. Sync Gradle
-3. Run on Samsung S24 (or any device with Android 8.0+)
+1. Open the project in **Android Studio**.
+2. Ensure you have the **Android SDK 35** and **Kotlin 2.2.10** configured.
+3. Sync Gradle and run on a supported device (e.g., Pixel 8/9, Galaxy S24) or emulator.
+4. **Note**: On some devices, you may need to enable "AICore Settings" in Developer Options to trigger the Gemini Nano model download.
 
 ## Dark Patterns Detected
 

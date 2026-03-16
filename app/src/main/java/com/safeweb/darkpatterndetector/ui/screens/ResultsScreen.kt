@@ -28,7 +28,7 @@ import com.safeweb.darkpatterndetector.R
 import com.safeweb.darkpatterndetector.detector.AnalysisResult
 import com.safeweb.darkpatterndetector.detector.DarkPattern
 import com.safeweb.darkpatterndetector.ui.theme.DangerRed
-import com.safeweb.darkpatterndetector.ui.theme.SafeGreen
+import com.safeweb.darkpatterndetector.ui.theme.SafeBlue
 import com.safeweb.darkpatterndetector.ui.theme.WarningAmber
 
 @Composable
@@ -67,12 +67,12 @@ fun ResultsScreen(
                 // Model badge
                 Surface(
                     shape = RoundedCornerShape(8.dp),
-                    color = SafeGreen.copy(alpha = 0.15f)
+                    color = SafeBlue.copy(alpha = 0.15f)
                 ) {
                     Text(
                         text = stringResource(R.string.on_device_lock),
                         style = MaterialTheme.typography.labelSmall,
-                        color = SafeGreen,
+                        color = SafeBlue,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                     )
                 }
@@ -181,8 +181,8 @@ fun ResultsScreen(
 @Composable
 private fun SummaryCard(result: AnalysisResult) {
     val isClean = result.patterns.isEmpty()
-    val backgroundColor = if (isClean) SafeGreen.copy(alpha = 0.12f) else DangerRed.copy(alpha = 0.12f)
-    val iconColor = if (isClean) SafeGreen else DangerRed
+    val backgroundColor = if (isClean) SafeBlue.copy(alpha = 0.12f) else DangerRed.copy(alpha = 0.12f)
+    val iconColor = if (isClean) SafeBlue else DangerRed
     val icon = if (isClean) Icons.Filled.CheckCircle else Icons.Filled.Warning
 
     Card(
@@ -333,7 +333,7 @@ private fun ExtractedTextCard(text: String) {
 private fun ConfidenceBadge(confidence: Float) {
     val percent = (confidence * 100).toInt()
     val color = when {
-        confidence >= 0.7f -> SafeGreen
+        confidence >= 0.7f -> SafeBlue
         confidence >= 0.5f -> WarningAmber
         else -> MaterialTheme.colorScheme.onSurfaceVariant
     }
